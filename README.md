@@ -31,8 +31,60 @@ Backend (server/):
 - Frontend: npm run dev | build | preview
 - Backend: npm run dev | start
 
+## User Flow
 
-Currently, two official plugins are available:
+```mermaid
+graph TD
+    A[User Visits App] --> B[View Car Dashboard]
+    B --> C{Want to Add Car?}
+    C -->|Yes| D[Login as Admin]
+    C -->|No| B
+    D --> E[Enter Credentials]
+    E --> F{Valid Credentials?}
+    F -->|Yes| G[Access Admin Panel]
+    F -->|No| H[Show Error]
+    H --> D
+    G --> I[Fill Car Details]
+    I --> J[Upload Car Image]
+    J --> K[Submit Car Listing]
+    K --> L[Car Added to Dashboard]
+    L --> B
+    B --> M[View All Cars]
+```
+
+## Data Storage:
+## MongoDb And Cloudinary
+ MongoDB stores all the car information including:
+Car details (make, model, year, price)
+Image URLs (after Cloudinary processing)
+User authentication data (for admin login)
+
+
+## How Cloudinary Works in This Application
+
+Cloudinary is a cloud-based service that handles image storage and processing. Here's how it works in our car listing app:
+## Image Upload Process:
+When an admin adds a new car and selects an image, the image is first temporarily stored on our server
+The application then sends this image to Cloudinary's servers through their API
+Cloudinary processes and stores the image securely in the cloud
+## Image Processing:
+Cloudinary automatically optimizes images for web use, reducing file size while maintaining quality
+It generates a unique URL for each uploaded image
+Images are organized in folders within your Cloudinary account
+## Image Delivery:
+When users view the car listings, the application uses the URLs provided by Cloudinary to display images
+Cloudinary delivers images quickly through its content delivery network (CDN)
+This ensures fast loading times regardless of the user's location
+## Benefits:
+Images are stored securely and won't take up space on our own servers
+Automatic optimization reduces bandwidth usage
+CDN delivery ensures fast loading times
+Images are automatically formatted for different browsers
+Easy to manage and organize images through Cloudinary's dashboard
+## Security:
+Only authenticated admins can upload images
+The application uses secure API keys to communicate with Cloudinary
+Images are private by default until made 
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
